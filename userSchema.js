@@ -1,11 +1,11 @@
-import mongoose from "mongoose";
+import { model, Schema } from "mongoose";
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
     firstName: String,
     lastName: String,
     age: Number,
     phoneNumber: String,
-    avatar: String,
+    avatar: String
 });
 
-export const userModel = mongoose.model("User", userSchema);
+export const userModel = model("User", userSchema);

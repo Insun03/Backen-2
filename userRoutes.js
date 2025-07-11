@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { userDelete, userGetById, userPost, userPut, userGet } from "./userController.js";
+import { userDelete, userGetById, userPost, userPut, usersGet } from "./userController.js";
 
 export const userRoutes = new Router()
 //user GET REQUEST
-userRoutes.get("/", userGet)
+userRoutes.get("/", usersGet)
 //user GET REQUEST BY ID
 userRoutes.get("/:id", userGetById)
 //user POST REQUEST

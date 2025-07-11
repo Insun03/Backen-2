@@ -1,6 +1,6 @@
 import { userModel } from "./userSchema.js";
 
-export const userGet = (req, res) => {
+export const usersGet = (req, res) => {
     userModel.find().then((data) => {
         if (data) { res.status(200).send(data) } else { res.status(200).send(null) }
     })
@@ -15,7 +15,8 @@ export const userGetById = (req, res) => {
 
 export const userPost = (req, res) => {
     const data = req.body;
-    if (data.name.trim()) {
+      if (data.age < 18) { res.status(400).send({ message: "user must be at least 18 years old" }) }
+    else if (data.firstName.trim() && data.lastName.trim()  && data.phoneNumber.trim() && data.avatar.trim() ) {
         userModel.create(data);
         res.status(201).send(data);
     }
@@ -33,7 +34,7 @@ export const userDelete = (req, res) => {
 export const userPut = (req, res) => {
     const data = req.body;
     const id = req.params.id;
-    if (data.name.trim()) {
+    if (data.firstName.trim() && data.lastName.trim()  && data.phoneNumber.trim() && data.avatar.trim()) {
         userModel.create(data);
         res.status(201).send(data);
     } else { res.status(400).send({ message: "Please fill all fields" }) }
