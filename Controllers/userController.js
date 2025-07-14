@@ -1,4 +1,5 @@
-import { userModel } from "./userSchema.js";
+import { userModel } from "../SChemas/userSchema.js";
+
 
 export const usersGet = (req, res) => {
     userModel.find().then((data) => {
@@ -15,10 +16,15 @@ export const userGetById = (req, res) => {
 
 export const userPost = (req, res) => {
     const data = req.body;
-      if (data.age < 18) { res.status(400).send({ message: "user must be at least 18 years old" }) }
-    else if (data.firstName.trim() && data.lastName.trim()  && data.phoneNumber.trim() && data.avatar.trim() ) {
-        userModel.create(data);
-        res.status(201).send(data);
+    const file = req.file;
+    if (data.age < 18) { res.status(400).send({ message: "user must be at least 18 years old" }) }
+    else if (data.firstName.trim() && data.lastName.trim() && data.phoneNumber.trim() && file) {
+        const newUser = {
+            ...data,
+            avatar: file.filename
+        };
+        userModel.create(data && newUser);
+        res.status(201).send(data && file);
     }
     else { res.status(400).send({ message: "Please fill all fields" }) }
 }
@@ -34,8 +40,14 @@ export const userDelete = (req, res) => {
 export const userPut = (req, res) => {
     const data = req.body;
     const id = req.params.id;
-    if (data.firstName.trim() && data.lastName.trim()  && data.phoneNumber.trim() && data.avatar.trim()) {
-        userModel.create(data);
+    const file = req.file;
+    if (data.firstName.trim() && data.lastName.trim() && data.phoneNumber.trim() && file) {
+        const newUser = {
+            ...data,
+            avatar: file.filename
+        };
+        userModel.findByIdAndUpdate(data && newUser);
         res.status(201).send(data);
     } else { res.status(400).send({ message: "Please fill all fields" }) }
 }
+
