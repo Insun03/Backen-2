@@ -47,7 +47,7 @@ export const userPut = (req, res) => {
             avatar: file.filename
         };
         userModel.findByIdAndUpdate(data && newUser);
-        res.status(201).send(data);
+        res.status(201).send({ message: "user update successfully" }, data);
     } else { res.status(400).send({ message: "Please fill all fields" }) }
 }
 

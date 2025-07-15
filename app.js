@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
-app.use('/images', express.static(path.join(process.cwd(), 'images')));
+app.use("/images", express.static(path.join(process.cwd(), "images")));
 dotenv.config();
 const port = process.env.BACKEND_PORT;
 const uri = process.env.DB_URI;
